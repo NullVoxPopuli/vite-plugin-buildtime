@@ -1,0 +1,11 @@
+{
+  "name": "vite-plugin-buildtime",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    }
+  }
+}
