@@ -42,6 +42,35 @@ export function buildTime(callback) {
   let finishedBoot = false;
   let lastUpdate;
 
+  function reportTimes() {
+
+    if (lastStart) {
+      if (!finishedBoot) {
+        finishedBoot = true;
+        let duration = Date.now() - lastStart;
+        /**
+         * We have to set to null here because the time between HTML entrypoints is very close
+         */
+        lastStart = null;
+
+        callback({
+          duration,
+          type: 'initial-build',
+        });
+      }
+    }
+
+    if (lastUpdate) {
+      let duration = Date.now() - lastUpdate;
+      lastUpdate = null;
+
+      callback({
+        duration,
+        type: 'rebuild',
+      });
+    }
+  }
+
 
   return {
     /**
@@ -65,31 +94,7 @@ export function buildTime(callback) {
      * Called each time an HTML entrypoint is output
      */
     transformIndexHTML() {
-      if (lastStart) {
-        if (!finishedBoot) {
-          finishedBoot = true;
-          let duration = Date.now() - lastStart;
-          /**
-           * We have to set to null here because the time between HTML entrypoints is very close
-           */
-          lastStart = null;
-
-          callback({
-            duration,
-            type: 'initial-build',
-          });
-        }
-      }
-
-      if (lastUpdate) {
-        let duration = Date.now() - lastUpdate;
-        lastUpdate = null;
-
-        callback({
-          duration,
-          type: 'rebuild',
-        });
-      }
+      reportTimes();
     },
     /**
     * NOTE: we can't use configureServer's 
@@ -98,9 +103,10 @@ export function buildTime(callback) {
     *     which means the build time will be perpetually delayed until the brower is focused
     *     (Chrome will aggressively deactivate tabs not in focus, for example)
     */
-    // configureServer(server) {
-    //   server.ws.on('connection', () => {
-    //   });
-    // },
+    configureServer(server) {
+      server.ws.on('connection', () => {
+        reportTimes();
+      });
+    },
   }
 }
