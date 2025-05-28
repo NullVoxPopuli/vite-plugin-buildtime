@@ -4,7 +4,7 @@
 
 
 ```bash
-npm install --save-dev vite-plugin-buildtime
+npm install --save-dev @nullvoxpopuli/vite-plugin-buildtime
 ```
 
 ## Usage
