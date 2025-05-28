@@ -1,5 +1,5 @@
 {
-  "name": "vite-plugin-buildtime",
+  "name": "@nullvoxpopuli/vite-plugin-buildtime",
   "version": "0.0.1",
   "type": "module",
   "exports": {
