@@ -11,7 +11,7 @@ npm install --save-dev @nullvoxpopuli/vite-plugin-buildtime
 
 in your vite.config.js (mjs,ts,mts,etc)
 ```js
-import { buildTime } from 'vite-plugin-buildtime';
+import { buildTime } from '@nullvoxpopulivite-plugin-buildtime';
 
 // ...
 plugins: [
