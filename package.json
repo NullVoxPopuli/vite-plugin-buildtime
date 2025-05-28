@@ -2,6 +2,9 @@
   "name": "@nullvoxpopuli/vite-plugin-buildtime",
   "version": "0.0.1",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
       "import": "./src/index.js",
